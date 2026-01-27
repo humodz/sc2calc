@@ -1,0 +1,47 @@
+.section .header {
+    font-weight: bold;
+}
+
+.section .title {
+    display: inline-block;
+    min-width: 6rem;
+}
+
+.section .items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+}
+
+.section .warn {
+    color: red;
+}
+
+
+
+.counter {
+    display: flex;
+    width: fit-content;
+    gap: 0.25rem;
+}
+
+.counter input {
+    margin-bottom: 0 !important;
+    height: 2.5rem !important;
+    max-width: 8rem !important;
+
+    background-image: var(--icon);
+    background-position: center left 0.5rem;
+    background-size: 32px 32px;
+    padding-left: calc(32px + 1.5rem) !important;
+}
+
+.counter button {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    line-height: 0 !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+

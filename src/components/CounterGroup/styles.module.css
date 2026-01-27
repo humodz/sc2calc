@@ -1,0 +1,18 @@
+.group .header {
+    font-weight: bold;
+}
+
+.group .title {
+    display: inline-block;
+    min-width: 6rem;
+}
+
+.group .items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1rem;
+}
+
+.group .warn {
+    color: red;
+}
