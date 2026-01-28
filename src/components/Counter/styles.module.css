@@ -4,6 +4,11 @@
     gap: 0.25rem;
 }
 
+.label {
+    display: block;
+    font-size: 0.7em !important;
+}
+
 .counter input {
     margin-bottom: 0 !important;
     height: 2.5rem !important;

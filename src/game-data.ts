@@ -19,8 +19,11 @@ export type ResourcesToggle = Record<ResourceName, boolean>
 
 const yields = {
     minerals: 58,
+    oversaturated: 27,
+    richminerals: 83,
     mule: 225,
     gas: 61,
+    richgas: 122,
     hatchery: 60 / 11,
     queen: 3 * 60 / 29,
 }
@@ -33,10 +36,10 @@ export const resourceTypesByRace: Record<Race, ResourcesToggle> = {
 
 export const incomeSources = {
     minerals: resource(yields.minerals, 0),
+    // oversaturated: resource(yields.oversaturated, 0),
+    richminerals: resource(yields.richminerals, 0),
     gas: resource(0, yields.gas),
-    // commandcenter: resource(16 * yields.minerals, 6 * yields.gas),
-    // orbital: resource(16 * yields.minerals + yields.mule, 6 * yields.gas),
-    // mule: resource(yields.mule, 0),
+    richgas: resource(0, yields.richgas),
 }
 
 const terranIncomeSources = {
@@ -145,7 +148,8 @@ export const unitsByRace = {
 }
 
 function resource(minerals: number, gas: number, larva = 0) {
-    return { minerals, gas, larva }
+    const res = { minerals, gas, larva }
+    return { ...res, real: { ...res, time: 0 } }
 }
 
 function unit(minerals: number, gas: number, time: number, larva = 0) {

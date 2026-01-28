@@ -2,6 +2,7 @@ import { type Race, races } from '../../game-data'
 import assets from '../../assets.json'
 import styles from './styles.module.css'
 import { cssUrl } from '../../utils'
+import { Fragment } from 'react/jsx-runtime'
 
 interface RacePickerProps {
   value: Race
@@ -13,9 +14,8 @@ export function RacePicker(props: RacePickerProps) {
     <form>
       <fieldset className={styles.racePicker}>
         {races.map((value) => (
-          <>
+          <Fragment key={value}>
             <input
-              key={'input' + value}
               type='radio'
               name='race-picker'
               value={value}
@@ -23,9 +23,9 @@ export function RacePicker(props: RacePickerProps) {
               onChange={() => props.onChange(value)}
               checked={props.value === value}
             />
-            <label key={'label' + value} htmlFor={value} style={{ '--bg': cssUrl(assets[value]) }}>
+            <label htmlFor={value} style={{ '--bg': cssUrl(assets[value]) }}>
             </label>
-          </>
+          </Fragment>
         ))}
       </fieldset>
     </form>

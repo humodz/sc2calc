@@ -1,6 +1,6 @@
 import { cssUrl, parseInteger } from '../../utils'
 import styles from './styles.module.css'
-import type { PropsWithChildren } from 'react'
+import { useId, type PropsWithChildren } from 'react'
 
 interface CounterProps {
   icon: string
@@ -10,19 +10,24 @@ interface CounterProps {
 }
 
 export function Counter(props: PropsWithChildren<CounterProps>) {
+  const id = 'counter-' + useId()
+
   return (
-    <fieldset className={styles.counter}>
-      <input
-        style={{ '--icon': cssUrl(props.icon) }}
-        title={props.label}
-        value={props.count}
-        onChange={e => props.setCount(parseInteger(e.target.value))}
-      />
-      <button onClick={() => props.setCount(Math.max(0, props.count - 1))}>-</button>
-      <button onClick={() => props.setCount(props.count + 1)}>+</button>
-      <div className={styles.children}>
-        {props.children}
-      </div>
-    </fieldset>
+    <div>
+      <label htmlFor={id} className={styles.label}>{props.label}</label>
+      <fieldset className={styles.counter}>
+        <input
+          style={{ '--icon': cssUrl(props.icon) }}
+          id={id}
+          value={props.count}
+          onChange={e => props.setCount(parseInteger(e.target.value))}
+        />
+        <button onClick={() => props.setCount(Math.max(0, props.count - 1))}>-</button>
+        <button onClick={() => props.setCount(props.count + 1)}>+</button>
+        <div className={styles.children}>
+          {props.children}
+        </div>
+      </fieldset>
+    </div>
   )
 }

@@ -57,6 +57,7 @@ export function CounterGroup(props: CounterGroupProps) {
         {
           dataKeys.map(it => (
             <Counter
+              key={it}
               icon={getAsset(it)}
               label={it}
               count={counters[it]}
@@ -93,9 +94,9 @@ export function DetailedInfo(props: DetailedInfoProps) {
       {detailedFields
         .filter(field => field === 'time' || props.fields[field])
         .map(field => (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.2em', minWidth: '28px' }}>
+        <div key={field} style={{ display: 'flex', alignItems: 'center', gap: '0.2em', minWidth: '28px' }}>
           <Icon scale={0.5} src={assets[field]} alt={field}/>
-          {values[field]}
+          {values[field].toFixed(0)}
         </div>
       ))}
     </div>
