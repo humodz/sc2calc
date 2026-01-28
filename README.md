@@ -1,8 +1,6 @@
 ## TODO
 
 - high yield and oversaturated resources
-- zerg
-  - need to add larva as a resource
-- protoss
 - read/write query parameters
-- detailed view
+
+convert public/etc/minerals.gif -colorspace Gray -fill yellow -tint 100% public/etc/richminerals.png

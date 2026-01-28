@@ -1,0 +1,61 @@
+import { useEffect, useState } from 'react'
+
+import { incomeSourcesByRace, resourceTypesByRace, unitsByRace, type Race } from '../../game-data'
+import { CounterGroup } from '../CounterGroup'
+
+import { RacePicker } from '../RacePicker'
+
+
+
+export function App() {
+  const [race, setRace] = useState<Race>('terran')
+  const [income, setIncome] = useState({ minerals: 0, gas: 0, larva: 0 })
+  const [expenses, setExpenses] = useState({ minerals: 0, gas: 0, larva: 0 })
+
+  useEffect(() => {
+    document
+      .head
+      .querySelectorAll('link[data-theme-for]')
+      .forEach((el: Element) => {
+        const link = el as HTMLLinkElement
+        link.disabled = link.dataset.themeFor !== race
+      })
+  }, [race])
+
+  const warn = {
+    minerals: income.minerals < expenses.minerals,
+    gas: income.gas < expenses.gas,
+    larva: income.larva < expenses.larva,
+  }
+
+  return (
+    <>
+      <RacePicker
+        value={race}
+        onChange={setRace}
+      />
+      <CounterGroup
+        key={'income-' + race}
+        index={0}
+        title='Income'
+        data={incomeSourcesByRace[race]}
+        resources={resourceTypesByRace[race]}
+        warn={warn}
+        value={income}
+        onChange={setIncome}
+      />
+      <CounterGroup
+        key={'production-' + race}
+        index={1}
+        title='Production'
+        data={unitsByRace[race]}
+        resources={resourceTypesByRace[race]}
+        warn={warn}
+        value={expenses}
+        onChange={setExpenses}
+      />
+    </>
+  )
+}
+
+

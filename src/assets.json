@@ -1,9 +1,12 @@
 {
-  "buildtime": "etc/buildtime.gif",
   "gas": "etc/gas.gif",
   "minerals": "etc/minerals.gif",
+  "oversaturated": "etc/oversaturated.png",
   "protoss": "etc/protoss.png",
+  "richgas": "etc/richgas.png",
+  "richminerals": "etc/richminerals.png",
   "terran": "etc/terran.png",
+  "time": "etc/time.png",
   "zerg": "etc/zerg.png",
   "adept": "protoss/adept.png",
   "archon": "protoss/archon.png",

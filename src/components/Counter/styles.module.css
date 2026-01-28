@@ -22,3 +22,7 @@
     text-align: center;
     vertical-align: middle;
 }
+
+.children {
+    min-width: 32px;
+}

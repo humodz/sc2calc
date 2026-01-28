@@ -8,12 +8,13 @@ export function getAsset(name: string) {
 type UnsafeAny = any
 
 export function mapValues<K extends keyof UnsafeAny, T, R>(
-    obj: Record<K, T>, fn: (v: T) => R
+  obj: Record<K, T>, fn: (k: K, v: T) => R
 ): Record<K, R> {
     const result: UnsafeAny = {}
 
     for (const key of Object.keys(obj)) {
-        result[key] = fn((obj as UnsafeAny)[key])
+      const unsafeKey = key as K
+      result[key] = fn(unsafeKey, obj[unsafeKey])
     }
 
     return result

@@ -1,5 +1,6 @@
 import { parseInteger } from '../../utils'
 import styles from './styles.module.css'
+import type { PropsWithChildren } from 'react'
 
 interface CounterProps {
   icon: string
@@ -8,7 +9,7 @@ interface CounterProps {
   setCount: (v: number) => void
 }
 
-export function Counter(props: CounterProps) {
+export function Counter(props: PropsWithChildren<CounterProps>) {
   return (
     <fieldset className={styles.counter}>
       <input
@@ -19,6 +20,9 @@ export function Counter(props: CounterProps) {
       />
       <button onClick={() => props.setCount(Math.max(0, props.count - 1))}>-</button>
       <button onClick={() => props.setCount(props.count + 1)}>+</button>
+      <div className={styles.children}>
+        {props.children}
+      </div>
     </fieldset>
   )
 }

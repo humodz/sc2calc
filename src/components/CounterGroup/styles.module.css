@@ -1,18 +1,22 @@
-.group .header {
+.header {
     font-weight: bold;
+    position: sticky;
+    background-color: var(--pico-background-color);
+    top: calc(32px * var(--index, 0));
+    height: 32px;
 }
 
-.group .title {
+.title {
     display: inline-block;
     min-width: 6rem;
 }
 
-.group .items {
+.items {
     display: flex;
     flex-wrap: wrap;
     gap: 0 1rem;
 }
 
-.group .warn {
-    color: red;
+.warn {
+    color: #F00;
 }
