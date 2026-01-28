@@ -30,3 +30,10 @@ export function updateRecord<T, V>(key: keyof T, value: V) {
 export function parseInteger(text: string) {
   return Number(text.replace(/[^\d]/g, ''));
 }
+
+const base = document.querySelector('base')!.href;
+
+export function cssUrl(relativeUrl: string) {
+  const url = new URL(relativeUrl, base);
+  return `url("${encodeURI(url.toString())}")`;
+}

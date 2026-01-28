@@ -5,3 +5,8 @@ declare module 'react' {
         [key: `--${string}`]: string | number
     }
 }
+
+declare global {
+    const GIT_BRANCH: string;
+    const GIT_COMMIT: string;
+}

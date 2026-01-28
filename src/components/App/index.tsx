@@ -12,10 +12,19 @@ export function App() {
   const [income, setIncome] = useState({ minerals: 0, gas: 0, larva: 0 })
   const [expenses, setExpenses] = useState({ minerals: 0, gas: 0, larva: 0 })
 
+  const themeSelector = 'link[data-theme-for]';
+
   useEffect(() => {
     document
       .head
-      .querySelectorAll('link[data-theme-for]')
+      .querySelectorAll(themeSelector)
+      .forEach(el => el.parentElement?.appendChild(el))
+  }, [])
+
+  useEffect(() => {
+    document
+      .head
+      .querySelectorAll(themeSelector)
       .forEach((el: Element) => {
         const link = el as HTMLLinkElement
         link.disabled = link.dataset.themeFor !== race

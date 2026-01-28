@@ -1,4 +1,4 @@
-import { parseInteger } from '../../utils'
+import { cssUrl, parseInteger } from '../../utils'
 import styles from './styles.module.css'
 import type { PropsWithChildren } from 'react'
 
@@ -13,7 +13,7 @@ export function Counter(props: PropsWithChildren<CounterProps>) {
   return (
     <fieldset className={styles.counter}>
       <input
-        style={{ '--icon': `url(${props.icon})` }}
+        style={{ '--icon': cssUrl(props.icon) }}
         title={props.label}
         value={props.count}
         onChange={e => props.setCount(parseInteger(e.target.value))}
