@@ -148,8 +148,7 @@ export const unitsByRace = {
 }
 
 function resource(minerals: number, gas: number, larva = 0) {
-    const res = { minerals, gas, larva }
-    return { ...res, real: { ...res, time: 0 } }
+    return { minerals, gas, larva }
 }
 
 function unit(minerals: number, gas: number, time: number, larva = 0) {
