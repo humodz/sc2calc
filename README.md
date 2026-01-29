@@ -11,3 +11,8 @@
 - Clean up detailed info
 - Section for resource nodes
 - Calculate gather rates properly using amount of nodes
+
+diff -u \
+    node_modules/@picocss/pico/css/pico.classless.css \
+    node_modules/@picocss/pico/css/pico.classless.purple.css \
+ | sed -n 's/^+//p' | grep -v '^++'

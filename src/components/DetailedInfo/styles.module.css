@@ -1,0 +1,12 @@
+.root {
+  font-size: 0.5em;
+  line-height: initial !important;
+  padding-top: 1px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+  min-width: 28px;
+}

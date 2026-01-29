@@ -91,7 +91,7 @@ export const zergUnits = {
   overlord: unit(100, 0, 18, 1),
   overseer: unit(50, 50, 12),
 
-  zergling: unit(25, 0, 17, 1),
+  zergling: unit(50, 0, 17, 1),
   baneling: unit(25, 25, 14),
 
   queen: unit(175, 0, 36),
@@ -145,6 +145,24 @@ export const unitsByRace = {
   terran: terranUnits,
   zerg: zergUnits,
   protoss: protossUnits,
+}
+
+export const dataByRace = {
+  terran: {
+    resources: resourceTypesByRace.terran,
+    incomeSources: terranIncomeSources,
+    units: terranUnits,
+  },
+  zerg: {
+    resources: resourceTypesByRace.zerg,
+    incomeSources: zergIncomeSources,
+    units: zergUnits,
+  },
+  protoss: {
+    resources: resourceTypesByRace.protoss,
+    incomeSources: protossIncomeSources,
+    units: protossUnits,
+  },
 }
 
 function resource(minerals: number, gas: number, larva = 0) {

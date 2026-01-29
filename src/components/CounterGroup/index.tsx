@@ -3,8 +3,8 @@ import assets from '../../assets.json'
 import type { ResourceName, Resources, ResourcesToggle } from '../../game-data'
 import { getAsset, mapValues, updateRecord } from '../../utils'
 import { Counter } from '../Counter'
+import { DetailedInfo } from '../DetailedInfo'
 import { Icon } from '../Icon'
-
 import styles from './styles.module.css'
 
 interface CounterGroupProps {
@@ -72,47 +72,5 @@ export function CounterGroup(props: CounterGroupProps) {
         ))}
       </div>
     </>
-  )
-}
-
-interface DetailedInfoProps {
-  fields: ResourcesToggle
-  item: Resources
-}
-
-const detailedFields = ['minerals', 'gas', 'larva', 'time'] as const
-
-export function DetailedInfo(props: DetailedInfoProps) {
-  const values = props.item.real
-
-  if (!values) {
-    return null
-  }
-
-  return (
-    <div
-      style={{
-        fontSize: '0.5em',
-        lineHeight: 'initial',
-        paddingTop: '1px',
-      }}
-    >
-      {detailedFields
-        .filter((field) => field === 'time' || props.fields[field])
-        .map((field) => (
-          <div
-            key={field}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.2em',
-              minWidth: '28px',
-            }}
-          >
-            <Icon scale={0.5} src={assets[field]} alt={field} />
-            {values[field].toFixed(0)}
-          </div>
-        ))}
-    </div>
   )
 }
