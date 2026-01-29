@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-import { type Race, dataByRace } from '../../game-data'
+import { dataByRace } from '../../game-data'
 import { CounterGroup } from '../CounterGroup'
 
+import { setRace, updateProduction, updateWorkers, useStore } from '../../store'
 import { RacePicker } from '../RacePicker'
+import { ResourceTally } from '../ResourceTally'
 
 export function App() {
-  const [race, setRace] = useState<Race>('terran')
-  const [income, setIncome] = useState({ minerals: 0, gas: 0, larva: 0 })
-  const [expenses, setExpenses] = useState({ minerals: 0, gas: 0, larva: 0 })
+  const [state, dispatch] = useStore()
+  const { race, income, expenses, workers, production } = state
 
   useTheme(race)
 
@@ -22,26 +23,32 @@ export function App() {
 
   return (
     <>
-      <RacePicker value={race} onChange={setRace} />
-      <CounterGroup
-        key={'workers-' + race}
+      <RacePicker value={race} onChange={(race) => dispatch(setRace(race))} />
+      <ResourceTally
         index={0}
         title="Workers"
-        data={gameData.incomeSources}
         resources={gameData.resources}
         warn={warn}
         value={income}
-        onChange={setIncome}
       />
       <CounterGroup
-        key={'production-' + race}
+        data={gameData.incomeSources}
+        resources={gameData.resources}
+        counters={workers}
+        onCounterChange={(k, v) => dispatch(updateWorkers(k, v))}
+      />
+      <ResourceTally
         index={1}
         title="Production"
-        data={gameData.units}
         resources={gameData.resources}
         warn={warn}
         value={expenses}
-        onChange={setExpenses}
+      />
+      <CounterGroup
+        data={gameData.units}
+        resources={gameData.resources}
+        counters={production}
+        onCounterChange={(k, v) => dispatch(updateProduction(k, v))}
       />
     </>
   )

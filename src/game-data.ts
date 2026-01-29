@@ -34,7 +34,7 @@ export const resourceTypesByRace: Record<Race, ResourcesToggle> = {
   protoss: { minerals: true, gas: true, larva: false },
 }
 
-export const incomeSources = {
+export const incomeSources: Record<string, Resources> = {
   minerals: resource(yields.minerals, 0),
   // oversaturated: resource(yields.oversaturated, 0),
   richminerals: resource(yields.richminerals, 0),
@@ -42,12 +42,12 @@ export const incomeSources = {
   richgas: resource(0, yields.richgas),
 }
 
-const terranIncomeSources = {
+const terranIncomeSources: Record<string, Resources> = {
   ...incomeSources,
   mule: resource(yields.mule, 0),
 }
 
-const zergIncomeSources = {
+const zergIncomeSources: Record<string, Resources> = {
   ...incomeSources,
   hatchery: resource(0, 0, yields.hatchery),
   queen: resource(0, 0, yields.queen),
@@ -61,7 +61,7 @@ export const incomeSourcesByRace = {
   protoss: protossIncomeSources,
 }
 
-export const terranUnits = {
+export const terranUnits: Record<string, Resources> = {
   scv: unit(50, 0, 12),
 
   marine: unit(50, 0, 18),
@@ -85,7 +85,7 @@ export const terranUnits = {
   battlecruiser: unit(400, 300, 64),
 }
 
-export const zergUnits = {
+export const zergUnits: Record<string, Resources> = {
   drone: unit(50, 0, 12, 1),
 
   overlord: unit(100, 0, 18, 1),
@@ -113,7 +113,7 @@ export const zergUnits = {
   ultralisk: unit(275, 200, 39, 1),
 }
 
-export const protossUnits = {
+export const protossUnits: Record<string, Resources> = {
   probe: unit(50, 0, 12),
 
   zealot: unit(100, 0, 27),

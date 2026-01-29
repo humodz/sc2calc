@@ -1,22 +1,5 @@
-.header {
-  font-weight: bold;
-  position: sticky;
-  background-color: var(--pico-background-color);
-  top: calc(32px * var(--index, 0));
-  height: 32px;
-}
-
-.title {
-  display: inline-block;
-  min-width: 6rem;
-}
-
 .items {
   display: flex;
   flex-wrap: wrap;
   gap: 0 1rem;
-}
-
-.warn {
-  color: #f00;
 }
