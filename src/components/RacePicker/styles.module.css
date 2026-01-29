@@ -1,18 +1,17 @@
-.racePicker input[type=radio] {
-    display: none;
+.racePicker input[type='radio'] {
+  display: none;
 }
 
 .racePicker label {
-    width: 40px;
-    height: 40px;
-    border-radius: 1000px;
-    background-image: var(--bg);
-    background-position: center center;
-    background-size: 30px;
-
+  width: 40px;
+  height: 40px;
+  border-radius: 1000px;
+  background-image: var(--bg);
+  background-position: center center;
+  background-size: 30px;
 }
 
 .racePicker :checked + label {
-    background-color: var(--pico-primary-background);
-    /* border-color: #FFF; */
+  background-color: var(--pico-primary-background);
+  /* border-color: #FFF; */
 }

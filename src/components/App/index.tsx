@@ -1,34 +1,33 @@
 import { useEffect, useState } from 'react'
 
-import { incomeSourcesByRace, resourceTypesByRace, unitsByRace, type Race } from '../../game-data'
+import {
+  type Race,
+  incomeSourcesByRace,
+  resourceTypesByRace,
+  unitsByRace,
+} from '../../game-data'
 import { CounterGroup } from '../CounterGroup'
 
 import { RacePicker } from '../RacePicker'
-
-
 
 export function App() {
   const [race, setRace] = useState<Race>('terran')
   const [income, setIncome] = useState({ minerals: 0, gas: 0, larva: 0 })
   const [expenses, setExpenses] = useState({ minerals: 0, gas: 0, larva: 0 })
 
-  const themeSelector = 'link[data-theme-for]';
+  const themeSelector = 'link[data-theme-for]'
 
   useEffect(() => {
-    document
-      .head
+    document.head
       .querySelectorAll(themeSelector)
-      .forEach(el => el.parentElement?.appendChild(el))
+      .forEach((el) => el.parentElement?.appendChild(el))
   }, [])
 
   useEffect(() => {
-    document
-      .head
-      .querySelectorAll(themeSelector)
-      .forEach((el: Element) => {
-        const link = el as HTMLLinkElement
-        link.disabled = link.dataset.themeFor !== race
-      })
+    document.head.querySelectorAll(themeSelector).forEach((el: Element) => {
+      const link = el as HTMLLinkElement
+      link.disabled = link.dataset.themeFor !== race
+    })
   }, [race])
 
   const warn = {
@@ -39,14 +38,11 @@ export function App() {
 
   return (
     <>
-      <RacePicker
-        value={race}
-        onChange={setRace}
-      />
+      <RacePicker value={race} onChange={setRace} />
       <CounterGroup
-        key={'income-' + race}
+        key={'workers-' + race}
         index={0}
-        title='Income'
+        title="Workers"
         data={incomeSourcesByRace[race]}
         resources={resourceTypesByRace[race]}
         warn={warn}
@@ -56,7 +52,7 @@ export function App() {
       <CounterGroup
         key={'production-' + race}
         index={1}
-        title='Production'
+        title="Production"
         data={unitsByRace[race]}
         resources={resourceTypesByRace[race]}
         warn={warn}
@@ -66,5 +62,3 @@ export function App() {
     </>
   )
 }
-
-

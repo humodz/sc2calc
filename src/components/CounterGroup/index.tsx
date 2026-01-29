@@ -1,9 +1,9 @@
-import { useMemo, useState, useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import assets from '../../assets.json'
 import type { ResourceName, Resources, ResourcesToggle } from '../../game-data'
 import { getAsset, mapValues, updateRecord } from '../../utils'
 import { Counter } from '../Counter'
 import { Icon } from '../Icon'
-import assets from '../../assets.json'
 
 import styles from './styles.module.css'
 
@@ -25,22 +25,28 @@ export function CounterGroup(props: CounterGroupProps) {
   const [counters, setCounters] = useState(() => mapValues(data, () => 0))
 
   useEffect(() => {
-    const newValue = dataKeys
-      .reduce((acc, it) => ({
+    const newValue = dataKeys.reduce(
+      (acc, it) => ({
         minerals: acc.minerals + counters[it] * data[it].minerals,
         gas: acc.gas + counters[it] * data[it].gas,
         larva: acc.larva + counters[it] * data[it].larva,
-      }), {
+      }),
+      {
         minerals: 0,
         gas: 0,
         larva: 0,
-      })
+      },
+    )
     onChange(newValue)
-  }, [ dataKeys, counters, data, onChange ])
+  }, [dataKeys, counters, data, onChange])
 
   const ResourceAmount = (what: ResourceName) => (
-    <span hidden={!props.resources[what]} className={props.warn[what] ? styles.warn : ''}>
-      {' '}<Icon src={assets[what]} alt={what} /> {props.value[what].toFixed(1)}
+    <span
+      hidden={!props.resources[what]}
+      className={props.warn[what] ? styles.warn : ''}
+    >
+      {' '}
+      <Icon src={assets[what]} alt={what} /> {props.value[what].toFixed(1)}
     </span>
   )
 
@@ -50,26 +56,20 @@ export function CounterGroup(props: CounterGroupProps) {
         <span className={styles.title}>{props.title}</span>
         {ResourceAmount('minerals')}
         {ResourceAmount('gas')}
-        {ResourceAmount('larva')}
-        {' '}/ min
+        {ResourceAmount('larva')} / min
       </p>
       <div className={styles.items}>
-        {
-          dataKeys.map(it => (
-            <Counter
-              key={it}
-              icon={getAsset(it)}
-              label={it}
-              count={counters[it]}
-              setCount={c => setCounters(updateRecord(it, c))}
-            >
-              <DetailedInfo
-                fields={props.resources}
-                item={data[it]}
-              />
-            </Counter>
-          ))
-        }
+        {dataKeys.map((it) => (
+          <Counter
+            key={it}
+            icon={getAsset(it)}
+            label={it}
+            count={counters[it]}
+            setCount={(c) => setCounters(updateRecord(it, c))}
+          >
+            <DetailedInfo fields={props.resources} item={data[it]} />
+          </Counter>
+        ))}
       </div>
     </>
   )
@@ -90,15 +90,29 @@ export function DetailedInfo(props: DetailedInfoProps) {
   }
 
   return (
-    <div style={{ fontSize: '0.5em', lineHeight: 'initial', paddingTop: '1px' }}>
+    <div
+      style={{
+        fontSize: '0.5em',
+        lineHeight: 'initial',
+        paddingTop: '1px',
+      }}
+    >
       {detailedFields
-        .filter(field => field === 'time' || props.fields[field])
-        .map(field => (
-        <div key={field} style={{ display: 'flex', alignItems: 'center', gap: '0.2em', minWidth: '28px' }}>
-          <Icon scale={0.5} src={assets[field]} alt={field}/>
-          {values[field].toFixed(0)}
-        </div>
-      ))}
+        .filter((field) => field === 'time' || props.fields[field])
+        .map((field) => (
+          <div
+            key={field}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.2em',
+              minWidth: '28px',
+            }}
+          >
+            <Icon scale={0.5} src={assets[field]} alt={field} />
+            {values[field].toFixed(0)}
+          </div>
+        ))}
     </div>
   )
 }
