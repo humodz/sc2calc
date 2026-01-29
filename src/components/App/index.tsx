@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { Fragment, useEffect } from 'react'
 
 import { dataByRace } from '../../game-data'
 import { CounterGroup } from '../CounterGroup'
@@ -22,7 +22,7 @@ export function App() {
   const gameData = dataByRace[race]
 
   return (
-    <>
+    <Fragment key={race}>
       <RacePicker value={race} onChange={(race) => dispatch(setRace(race))} />
       <ResourceTally
         index={0}
@@ -50,7 +50,7 @@ export function App() {
         counters={production}
         onCounterChange={(k, v) => dispatch(updateProduction(k, v))}
       />
-    </>
+    </Fragment>
   )
 }
 
