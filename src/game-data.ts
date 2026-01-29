@@ -21,7 +21,7 @@ const yields = {
   minerals: 58,
   oversaturated: 27,
   richminerals: 83,
-  mule: 225,
+  mule: 3.45 * 58,
   gas: 61,
   richgas: 122,
   hatchery: 60 / 11,
@@ -67,34 +67,31 @@ export const terranUnits: Record<string, Resources> = {
   marine: unit(50, 0, 18),
   reaper: unit(50, 50, 32),
   marauder: unit(100, 25, 21),
-
   ghost: unit(150, 125, 29),
 
   hellion: unit(100, 0, 21),
   widowmine: unit(75, 25, 21),
   cyclone: unit(150, 100, 32),
   siegetank: unit(150, 125, 32),
+  thor: unit(300, 200, 43),
 
   viking: unit(125, 75, 30),
   medivac: unit(100, 100, 30),
   liberator: unit(150, 125, 43),
   raven: unit(100, 150, 34),
   banshee: unit(150, 100, 43),
-
-  thor: unit(300, 200, 43),
   battlecruiser: unit(400, 300, 64),
 }
 
 export const zergUnits: Record<string, Resources> = {
   drone: unit(50, 0, 12, 1),
+  queen: unit(175, 0, 36),
 
   overlord: unit(100, 0, 18, 1),
   overseer: unit(50, 50, 12),
 
   zergling: unit(50, 0, 17, 1),
   baneling: unit(25, 25, 14),
-
-  queen: unit(175, 0, 36),
 
   roach: unit(75, 25, 19, 1),
   ravager: unit(25, 75, 12),
@@ -103,7 +100,6 @@ export const zergUnits: Record<string, Resources> = {
   lurker: unit(50, 100, 18),
 
   mutalisk: unit(100, 100, 24, 1),
-
   corruptor: unit(150, 100, 29, 1),
   broodlord: unit(150, 150, 24),
 
@@ -117,25 +113,21 @@ export const protossUnits: Record<string, Resources> = {
   probe: unit(50, 0, 12),
 
   zealot: unit(100, 0, 27),
-
   adept: unit(100, 25, 30),
   stalker: unit(125, 50, 27),
   sentry: unit(50, 100, 23),
-
   hightemplar: unit(50, 150, 39),
   darktemplar: unit(125, 125, 39),
 
   observer: unit(25, 75, 17.9),
   warpprism: unit(250, 0, 36),
   immortal: unit(250, 100, 39),
-
   colossus: unit(300, 200, 54),
   disruptor: unit(150, 150, 36),
 
   phoenix: unit(150, 100, 25),
   oracle: unit(150, 150, 37),
   voidray: unit(250, 150, 43),
-
   tempest: unit(250, 175, 43),
   carrier: unit(350, 250, 64),
   mothership: unit(400, 400, 89),

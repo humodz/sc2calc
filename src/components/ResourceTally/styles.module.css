@@ -2,7 +2,7 @@
   font-weight: bold;
   position: sticky;
   background-color: var(--pico-background-color);
-  top: calc(32px * var(--index, 0));
+  top: calc(50px + 32px * var(--index, 0));
   height: 32px;
 }
 

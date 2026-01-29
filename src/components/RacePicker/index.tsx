@@ -11,25 +11,23 @@ interface RacePickerProps {
 
 export function RacePicker(props: RacePickerProps) {
   return (
-    <form>
-      <fieldset className={styles.racePicker}>
-        {races.map((value) => (
-          <Fragment key={value}>
-            <input
-              type="radio"
-              name="race-picker"
-              value={value}
-              id={value}
-              onChange={() => props.onChange(value)}
-              checked={props.value === value}
-            />
-            <label
-              htmlFor={value}
-              style={{ '--bg': cssUrl(assets[value]) }}
-            ></label>
-          </Fragment>
-        ))}
-      </fieldset>
-    </form>
+    <fieldset className={styles.racePicker}>
+      {races.map((value) => (
+        <Fragment key={value}>
+          <input
+            type="radio"
+            name="race-picker"
+            value={value}
+            id={value}
+            onChange={() => props.onChange(value)}
+            checked={props.value === value}
+          />
+          <label
+            htmlFor={value}
+            style={{ '--bg': cssUrl(assets[value]) }}
+          ></label>
+        </Fragment>
+      ))}
+    </fieldset>
   )
 }
