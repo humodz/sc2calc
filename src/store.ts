@@ -1,50 +1,50 @@
 import { useReducer } from 'react'
 import { dataByRace, type Race, type Resources } from './game-data'
-import { mapValues } from './utils'
+import { createDict, mapValues } from './utils'
 
-interface AppState {
+export interface AppState {
   race: Race
-  income: Resources
   expenses: Resources
-  workers: Record<string, number>
+  workers2: Record<string, Record<string, number>>
   production: Record<string, number>
 }
 
 function initialState(race: Race): AppState {
-  const income = dataByRace[race].incomeSources
   const units = dataByRace[race].units
+  const income2 = dataByRace[race].incomeSourcesV2
 
   return {
     race,
-    income: { minerals: 0, gas: 0, larva: 0 },
     expenses: { minerals: 0, gas: 0, larva: 0 },
-    workers: mapValues(income, () => 0),
+    workers2: mapValues(income2, (keys) => createDict(keys, 0)),
     production: mapValues(units, () => 0),
   }
 }
 
 export const setRace = (race: Race) => () => initialState(race)
 
-export const updateWorkers =
-  (key: string, value: number) => (state: AppState) => {
-    const incomeSources = dataByRace[state.race].incomeSources
-
-    const workers = {
-      ...state.workers,
-      [key]: value,
+export const updateWorkers2 =
+  (section: string, counter: string, value: number) =>
+  (state: AppState): AppState => {
+    const updatedSection = {
+      ...state.workers2[section],
+      [counter]: value,
     }
 
-    const income = recalculate(workers, incomeSources)
+    const updatedWorkers = {
+      ...state.workers2,
+      [section]: updatedSection,
+    }
 
     return {
       ...state,
-      income,
-      workers,
+      workers2: updatedWorkers,
     }
   }
 
 export const updateProduction =
-  (key: string, value: number) => (state: AppState) => {
+  (key: string, value: number) =>
+  (state: AppState): AppState => {
     const units = dataByRace[state.race].units
 
     const production = {
@@ -61,6 +61,7 @@ export const updateProduction =
     }
   }
 
+// TODO move to economy
 const recalculate = (
   counters: Record<string, number>,
   values: Record<string, Resources>,

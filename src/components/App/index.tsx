@@ -3,13 +3,19 @@ import { Fragment, useEffect, useMemo } from 'react'
 import { dataByRace } from '../../game-data'
 import { CounterGroup } from '../CounterGroup'
 
-import { setRace, updateProduction, updateWorkers, useStore } from '../../store'
+import {
+  setRace,
+  updateProduction,
+  updateWorkers2,
+  useStore,
+} from '../../store'
 import { MultiCounterGroup } from '../MultiCounterGroup'
 import { RacePicker } from '../RacePicker'
 import { ResourceTally } from '../ResourceTally'
 
 import assets from '../../assets.json'
-import { getAsset, mapToObject, mapValues } from '../../utils'
+import { calculateIncome } from '../../economy'
+import { getAsset } from '../../utils'
 
 const workerIcon = {
   terran: assets.scv,
@@ -19,9 +25,11 @@ const workerIcon = {
 
 export function App() {
   const [state, dispatch] = useStore()
-  const { race, income, expenses, workers, production } = state
+  const { race, expenses, workers2, production } = state
 
   useTheme(race)
+
+  const income = useMemo(() => calculateIncome(workers2), [workers2])
 
   const warn = {
     minerals: income.minerals < expenses.minerals,
@@ -30,14 +38,6 @@ export function App() {
   }
 
   const gameData = dataByRace[race]
-
-  const multiCounters = useMemo(
-    () =>
-      mapValues(gameData.incomeSourcesV2, (keys) =>
-        mapToObject(keys, (k) => [k, 0]),
-      ),
-    [gameData],
-  )
 
   const getIcon = (k1: string, k2: string) => {
     if (k2 === 'nodes') {
@@ -51,11 +51,6 @@ export function App() {
   return (
     <Fragment key={race}>
       <RacePicker value={race} onChange={(race) => dispatch(setRace(race))} />
-      <MultiCounterGroup
-        getIcon={getIcon}
-        counters={multiCounters}
-        setCount={console.log}
-      />
       <ResourceTally
         index={0}
         title="Workers"
@@ -63,12 +58,17 @@ export function App() {
         warn={warn}
         value={income}
       />
-      <CounterGroup
+      <MultiCounterGroup
+        getIcon={getIcon}
+        counters={state.workers2}
+        setCount={(k1, k2, v) => dispatch(updateWorkers2(k1, k2, v))}
+      />
+      {/* <CounterGroup
         data={gameData.incomeSources}
         resources={gameData.resources}
         counters={workers}
         onCounterChange={(k, v) => dispatch(updateWorkers(k, v))}
-      />
+      /> */}
       <ResourceTally
         index={1}
         title="Production"

@@ -28,6 +28,10 @@ export function mapToObject<T, R>(
   return Object.fromEntries(items.map((it) => fn(it)))
 }
 
+export function createDict<T>(keys: string[], value: T) {
+  return Object.fromEntries(keys.map((k) => [k, value]))
+}
+
 export function updateRecord<T, V>(key: keyof T, value: V) {
   return (old: T) => ({
     ...old,
