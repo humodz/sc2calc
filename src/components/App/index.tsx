@@ -56,7 +56,7 @@ export function App() {
       </fieldset> */}
       <ResourceTally
         index={0}
-        title="Workers"
+        title="Income"
         resources={gameData.resources}
         warn={warn}
         value={income}
