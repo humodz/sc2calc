@@ -7,26 +7,13 @@ export interface Resources {
   minerals: number
   gas: number
   larva: number
-  real?: {
-    minerals: number
-    gas: number
-    larva: number
-    time: number
-  }
+}
+
+export interface Unit extends Resources {
+  real: Resources & { time: number }
 }
 
 export type ResourcesToggle = Record<ResourceName, boolean>
-
-const yields = {
-  minerals: 58,
-  oversaturated: 27,
-  richminerals: 83,
-  mule: 3.45 * 58,
-  gas: 61,
-  richgas: 122,
-  hatchery: 60 / 11,
-  queen: (3 * 60) / 29,
-}
 
 export const resourceTypesByRace: Record<Race, ResourcesToggle> = {
   terran: { minerals: true, gas: true, larva: false },
@@ -34,49 +21,28 @@ export const resourceTypesByRace: Record<Race, ResourcesToggle> = {
   protoss: { minerals: true, gas: true, larva: false },
 }
 
-const incomeSources: Record<string, Resources> = {
-  minerals: resource(yields.minerals, 0),
-  // oversaturated: resource(yields.oversaturated, 0),
-  richminerals: resource(yields.richminerals, 0),
-  gas: resource(0, yields.gas),
-  richgas: resource(0, yields.richgas),
+const normalResource = ['nodes', 'workers']
+
+const incomeSources: Record<string, string[]> = {
+  minerals: normalResource,
+  gas: normalResource,
+  richminerals: normalResource,
+  richgas: normalResource,
 }
 
-const terranIncomeSources: Record<string, Resources> = {
+const terranIncomeSources: Record<string, string[]> = {
   ...incomeSources,
-  mule: resource(yields.mule, 0),
+  mule: ['mule'],
 }
 
-const zergIncomeSources: Record<string, Resources> = {
+const zergIncomeSources: Record<string, string[]> = {
   ...incomeSources,
-  hatchery: resource(0, 0, yields.hatchery),
-  queen: resource(0, 0, yields.queen),
+  larva: ['hatchery', 'queen'],
 }
 
 const protossIncomeSources = incomeSources
 
-const simple = ['nodes', 'workers']
-
-const incomeSourcesV2: Record<string, string[]> = {
-  minerals: simple,
-  gas: simple,
-  richminerals: simple,
-  richgas: simple,
-}
-
-const terranIncomeSourcesV2: Record<string, string[]> = {
-  ...incomeSourcesV2,
-  mule: ['mule'],
-}
-
-const zergIncomeSourcesV2: Record<string, string[]> = {
-  ...incomeSourcesV2,
-  larva: ['hatchery', 'queen'],
-}
-
-const protossIncomeSourcesV2 = incomeSourcesV2
-
-export const terranUnits: Record<string, Resources> = {
+export const terranUnits: Record<string, Unit> = {
   scv: unit(50, 0, 12),
 
   marine: unit(50, 0, 18),
@@ -98,7 +64,7 @@ export const terranUnits: Record<string, Resources> = {
   battlecruiser: unit(400, 300, 64),
 }
 
-export const zergUnits: Record<string, Resources> = {
+export const zergUnits: Record<string, Unit> = {
   drone: unit(50, 0, 12, 1),
   queen: unit(175, 0, 36),
 
@@ -124,7 +90,7 @@ export const zergUnits: Record<string, Resources> = {
   ultralisk: unit(275, 200, 39, 1),
 }
 
-export const protossUnits: Record<string, Resources> = {
+export const protossUnits: Record<string, Unit> = {
   probe: unit(50, 0, 12),
 
   zealot: unit(100, 0, 27),
@@ -152,25 +118,18 @@ export const dataByRace = {
   terran: {
     resources: resourceTypesByRace.terran,
     incomeSources: terranIncomeSources,
-    incomeSourcesV2: terranIncomeSourcesV2,
     units: terranUnits,
   },
   zerg: {
     resources: resourceTypesByRace.zerg,
     incomeSources: zergIncomeSources,
-    incomeSourcesV2: zergIncomeSourcesV2,
     units: zergUnits,
   },
   protoss: {
     resources: resourceTypesByRace.protoss,
     incomeSources: protossIncomeSources,
-    incomeSourcesV2: protossIncomeSourcesV2,
     units: protossUnits,
   },
-}
-
-function resource(minerals: number, gas: number, larva = 0) {
-  return { minerals, gas, larva }
 }
 
 function unit(minerals: number, gas: number, time: number, larva = 0) {

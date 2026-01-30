@@ -3,18 +3,13 @@ import { Fragment, useEffect, useMemo } from 'react'
 import { dataByRace } from '../../game-data'
 import { CounterGroup } from '../CounterGroup'
 
-import {
-  setRace,
-  updateProduction,
-  updateWorkers2,
-  useStore,
-} from '../../store'
+import { setRace, updateProduction, updateWorkers, useStore } from '../../store'
 import { MultiCounterGroup } from '../MultiCounterGroup'
 import { RacePicker } from '../RacePicker'
 import { ResourceTally } from '../ResourceTally'
 
 import assets from '../../assets.json'
-import { calculateIncome } from '../../economy'
+import { calculateIncome, calculteExpenses } from '../../economy'
 import { getAsset } from '../../utils'
 
 const workerIcon = {
@@ -25,11 +20,15 @@ const workerIcon = {
 
 export function App() {
   const [state, dispatch] = useStore()
-  const { race, expenses, workers2, production } = state
+  const { race, workers, production } = state
 
   useTheme(race)
 
-  const income = useMemo(() => calculateIncome(workers2), [workers2])
+  const income = useMemo(() => calculateIncome(workers), [workers])
+  const expenses = useMemo(
+    () => calculteExpenses(production, dataByRace[race].units),
+    [production, race],
+  )
 
   const warn = {
     minerals: income.minerals < expenses.minerals,
@@ -60,15 +59,9 @@ export function App() {
       />
       <MultiCounterGroup
         getIcon={getIcon}
-        counters={state.workers2}
-        setCount={(k1, k2, v) => dispatch(updateWorkers2(k1, k2, v))}
+        counters={state.workers}
+        setCount={(k1, k2, v) => dispatch(updateWorkers(k1, k2, v))}
       />
-      {/* <CounterGroup
-        data={gameData.incomeSources}
-        resources={gameData.resources}
-        counters={workers}
-        onCounterChange={(k, v) => dispatch(updateWorkers(k, v))}
-      /> */}
       <ResourceTally
         index={1}
         title="Production"
