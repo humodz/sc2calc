@@ -1,11 +1,21 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useMemo } from 'react'
 
 import { dataByRace } from '../../game-data'
 import { CounterGroup } from '../CounterGroup'
 
 import { setRace, updateProduction, updateWorkers, useStore } from '../../store'
+import { MultiCounterGroup } from '../MultiCounterGroup'
 import { RacePicker } from '../RacePicker'
 import { ResourceTally } from '../ResourceTally'
+
+import assets from '../../assets.json'
+import { getAsset, mapToObject, mapValues } from '../../utils'
+
+const workerIcon = {
+  terran: assets.scv,
+  zerg: assets.drone,
+  protoss: assets.probe,
+}
 
 export function App() {
   const [state, dispatch] = useStore()
@@ -21,9 +31,31 @@ export function App() {
 
   const gameData = dataByRace[race]
 
+  const multiCounters = useMemo(
+    () =>
+      mapValues(gameData.incomeSourcesV2, (keys) =>
+        mapToObject(keys, (k) => [k, 0]),
+      ),
+    [gameData],
+  )
+
+  const getIcon = (k1: string, k2: string) => {
+    if (k2 === 'nodes') {
+      return getAsset(k1)
+    } else if (k2 === 'workers') {
+      return workerIcon[race]
+    }
+    return getAsset(k2)
+  }
+
   return (
     <Fragment key={race}>
       <RacePicker value={race} onChange={(race) => dispatch(setRace(race))} />
+      <MultiCounterGroup
+        getIcon={getIcon}
+        counters={multiCounters}
+        setCount={console.log}
+      />
       <ResourceTally
         index={0}
         title="Workers"

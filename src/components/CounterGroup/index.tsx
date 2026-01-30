@@ -19,7 +19,7 @@ export function CounterGroup(props: CounterGroupProps) {
   )
 
   return (
-    <div className={styles.items}>
+    <div className={styles.container}>
       {counterKeys.map((it) => (
         <Counter
           key={it}

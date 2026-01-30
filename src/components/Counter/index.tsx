@@ -4,7 +4,7 @@ import styles from './styles.module.css'
 
 interface CounterProps {
   icon: string
-  label: string
+  label?: string
   count: number
   setCount: (v: number) => void
 }
@@ -14,9 +14,11 @@ export function Counter(props: PropsWithChildren<CounterProps>) {
 
   return (
     <div>
-      <label htmlFor={id} className={styles.label}>
-        {props.label}
-      </label>
+      {props.label !== undefined ? (
+        <label htmlFor={id} className={styles.label}>
+          {props.label}
+        </label>
+      ) : null}
       <fieldset className={styles.counter}>
         <input
           style={{ '--icon': cssUrl(props.icon) }}

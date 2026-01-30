@@ -9,16 +9,23 @@ type UnsafeAny = any
 
 export function mapValues<K extends keyof UnsafeAny, T, R>(
   obj: Record<K, T>,
-  fn: (k: K, v: T) => R,
+  fn: (v: T, k: K) => R,
 ): Record<K, R> {
   const result: UnsafeAny = {}
 
   for (const key of Object.keys(obj)) {
     const unsafeKey = key as K
-    result[key] = fn(unsafeKey, obj[unsafeKey])
+    result[key] = fn(obj[unsafeKey], unsafeKey)
   }
 
   return result
+}
+
+export function mapToObject<T, R>(
+  items: T[],
+  fn: (item: T) => [string, R],
+): Record<string, R> {
+  return Object.fromEntries(items.map((it) => fn(it)))
 }
 
 export function updateRecord<T, V>(key: keyof T, value: V) {

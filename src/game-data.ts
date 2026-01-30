@@ -34,7 +34,7 @@ export const resourceTypesByRace: Record<Race, ResourcesToggle> = {
   protoss: { minerals: true, gas: true, larva: false },
 }
 
-export const incomeSources: Record<string, Resources> = {
+const incomeSources: Record<string, Resources> = {
   minerals: resource(yields.minerals, 0),
   // oversaturated: resource(yields.oversaturated, 0),
   richminerals: resource(yields.richminerals, 0),
@@ -55,11 +55,26 @@ const zergIncomeSources: Record<string, Resources> = {
 
 const protossIncomeSources = incomeSources
 
-export const incomeSourcesByRace = {
-  terran: terranIncomeSources,
-  zerg: zergIncomeSources,
-  protoss: protossIncomeSources,
+const simple = ['nodes', 'workers']
+
+const incomeSourcesV2: Record<string, string[]> = {
+  minerals: simple,
+  gas: simple,
+  richminerals: simple,
+  richgas: simple,
 }
+
+const terranIncomeSourcesV2: Record<string, string[]> = {
+  ...incomeSourcesV2,
+  mule: ['mule'],
+}
+
+const zergIncomeSourcesV2: Record<string, string[]> = {
+  ...incomeSourcesV2,
+  larva: ['hatchery', 'queen'],
+}
+
+const protossIncomeSourcesV2 = incomeSourcesV2
 
 export const terranUnits: Record<string, Resources> = {
   scv: unit(50, 0, 12),
@@ -133,26 +148,23 @@ export const protossUnits: Record<string, Resources> = {
   mothership: unit(400, 400, 89),
 }
 
-export const unitsByRace = {
-  terran: terranUnits,
-  zerg: zergUnits,
-  protoss: protossUnits,
-}
-
 export const dataByRace = {
   terran: {
     resources: resourceTypesByRace.terran,
     incomeSources: terranIncomeSources,
+    incomeSourcesV2: terranIncomeSourcesV2,
     units: terranUnits,
   },
   zerg: {
     resources: resourceTypesByRace.zerg,
     incomeSources: zergIncomeSources,
+    incomeSourcesV2: zergIncomeSourcesV2,
     units: zergUnits,
   },
   protoss: {
     resources: resourceTypesByRace.protoss,
     incomeSources: protossIncomeSources,
+    incomeSourcesV2: protossIncomeSourcesV2,
     units: protossUnits,
   },
 }
