@@ -21,6 +21,19 @@ export const resourceTypesByRace: Record<Race, ResourcesToggle> = {
   protoss: { minerals: true, gas: true, larva: false },
 }
 
+interface ResourceNode {
+  nodes: number
+  workers: number
+}
+export interface IncomeSources {
+  minerals: ResourceNode
+  gas: ResourceNode
+  richminerals: ResourceNode
+  richgas: ResourceNode
+  mule: { mule: number }
+  larva: { hatchery: number; queen: number }
+}
+
 const normalResource = ['nodes', 'workers']
 
 const incomeSources: Record<string, string[]> = {

@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import type { Resources, ResourcesToggle } from '../../game-data'
+import type { ResourcesToggle, Unit } from '../../game-data'
 import { getAsset } from '../../utils'
 import { Counter } from '../Counter'
 import { DetailedInfo } from '../DetailedInfo'
@@ -7,7 +7,7 @@ import styles from './styles.module.css'
 
 interface CounterGroupProps {
   resources: ResourcesToggle
-  data: Record<string, Resources>
+  data: Record<string, Unit>
   counters: Record<string, number>
   onCounterChange: (key: string, value: number) => void
 }

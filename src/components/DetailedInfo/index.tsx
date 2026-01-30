@@ -1,11 +1,11 @@
 import assets from '../../assets.json'
-import type { Resources, ResourcesToggle } from '../../game-data'
+import type { ResourcesToggle, Unit } from '../../game-data'
 import { Icon } from '../Icon'
 import styles from './styles.module.css'
 
 interface DetailedInfoProps {
   fields: ResourcesToggle
-  item: Resources
+  item: Unit
 }
 
 const detailedFields = ['minerals', 'gas', 'larva', 'time'] as const

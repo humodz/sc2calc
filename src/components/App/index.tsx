@@ -50,6 +50,10 @@ export function App() {
   return (
     <Fragment key={race}>
       <RacePicker value={race} onChange={(race) => dispatch(setRace(race))} />
+      {/* <fieldset className="grid" style={{ display: 'flex', gap: '0.25rem' }}>
+        <button style={{height: '2.5rem', lineHeight: '0'}}>+1 base</button>
+        <button style={{height: '2.5rem', lineHeight: '0' }}>-1 base</button>
+      </fieldset> */}
       <ResourceTally
         index={0}
         title="Workers"
