@@ -2,17 +2,8 @@
 
 ### Sources
 
-- Unit data: https://liquipedia.net/starcraft2/Units_(Legacy_of_the_Void)
-- Gather rats: https://liquipedia.net/starcraft2/Mining_Minerals
+- Gather rates
+    - https://liquipedia.net/starcraft2/Mining_Minerals
+    - https://liquipedia.net/starcraft2/Resources#Mining_Rates
 - Larva rates: https://liquipedia.net/starcraft2/Larva_(Legacy_of_the_Void)
-
-### To-do
-
-- Clean up detailed info
-- Section for resource nodes
-- Calculate gather rates properly using amount of nodes
-
-diff -u \
-    node_modules/@picocss/pico/css/pico.classless.css \
-    node_modules/@picocss/pico/css/pico.classless.purple.css \
- | sed -n 's/^+//p' | grep -v '^++'
+- Units: https://liquipedia.net/starcraft2/Units_(Legacy_of_the_Void)
