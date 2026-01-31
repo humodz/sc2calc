@@ -10,7 +10,8 @@ export interface Resources {
 }
 
 export interface Unit extends Resources {
-  real: Resources & { time: number }
+  time: number
+  // real: Resources & { time: number }
 }
 
 export type ResourcesToggle = Record<ResourceName, boolean>
@@ -146,10 +147,11 @@ export const dataByRace = {
 }
 
 function unit(minerals: number, gas: number, time: number, larva = 0) {
-  return {
-    minerals: (minerals * 60) / time,
-    gas: (gas * 60) / time,
-    larva: (larva * 60) / time,
-    real: { minerals, gas, time, larva },
-  }
+  return { minerals, gas, time, larva }
+  // return {
+  //   minerals: (minerals * 60) / time,
+  //   gas: (gas * 60) / time,
+  //   larva: (larva * 60) / time,
+  //   real: { minerals, gas, time, larva },
+  // }
 }

@@ -1,7 +1,7 @@
 // https://liquipedia.net/starcraft2/Resources#Mining_Rates
 // https://liquipedia.net/starcraft2/Larva_(Legacy_of_the_Void)
 
-import type { Resources } from './game-data'
+import type { Unit } from './game-data'
 
 const yields = {
   minerals: [58, 115, 143],
@@ -50,15 +50,28 @@ export function calculateIncome(
   }
 }
 
+export type ExpensesMode = 'units-per-minute' | 'number-of-queues'
+
+const costFunctionByMode = {
+  'units-per-minute': (cost: number) => cost,
+  'number-of-queues': (cost: number, time: number) => (cost * 60) / time,
+}
+
 export const calculteExpenses = (
   counters: Record<string, number>,
-  costs: Record<string, Resources>,
-) =>
-  Object.keys(counters).reduce(
+  costs: Record<string, Unit>,
+  mode: ExpensesMode,
+) => {
+  const calcCost = costFunctionByMode[mode]
+
+  return Object.keys(counters).reduce(
     (acc, it) => ({
-      minerals: acc.minerals + counters[it] * costs[it].minerals,
-      gas: acc.gas + counters[it] * costs[it].gas,
-      larva: acc.larva + counters[it] * costs[it].larva,
+      minerals:
+        acc.minerals +
+        counters[it] * calcCost(costs[it].minerals, costs[it].time),
+      gas: acc.gas + counters[it] * calcCost(costs[it].gas, costs[it].time),
+      larva:
+        acc.larva + counters[it] * calcCost(costs[it].larva, costs[it].time),
     }),
     {
       minerals: 0,
@@ -66,6 +79,7 @@ export const calculteExpenses = (
       larva: 0,
     },
   )
+}
 
 function calc(yields: number[], workers: number, nodes: number) {
   return diffs(yields)

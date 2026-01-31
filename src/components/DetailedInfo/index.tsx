@@ -11,12 +11,6 @@ interface DetailedInfoProps {
 const detailedFields = ['minerals', 'gas', 'larva', 'time'] as const
 
 export function DetailedInfo(props: DetailedInfoProps) {
-  const values = props.item.real
-
-  if (!values) {
-    return null
-  }
-
   return (
     <div className={styles.root}>
       {detailedFields
@@ -24,7 +18,7 @@ export function DetailedInfo(props: DetailedInfoProps) {
         .map((field) => (
           <div key={field} className={styles.item}>
             <Icon scale={0.5} src={assets[field]} alt={field} />
-            {values[field].toFixed(0)}
+            {props.item[field].toFixed(0)}
           </div>
         ))}
     </div>

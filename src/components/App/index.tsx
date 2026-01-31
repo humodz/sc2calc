@@ -1,16 +1,28 @@
-import { Fragment, useEffect, useMemo } from 'react'
+import { Fragment, useMemo } from 'react'
 
 import { dataByRace } from '../../game-data'
 import { CounterGroup } from '../CounterGroup'
 
-import { setRace, updateProduction, updateWorkers, useStore } from '../../store'
+import {
+  setExpensesMode,
+  setRace,
+  updateProduction,
+  updateWorkers,
+  useStore,
+} from '../../store'
 import { MultiCounterGroup } from '../MultiCounterGroup'
 import { RacePicker } from '../RacePicker'
 import { ResourceTally } from '../ResourceTally'
 
 import assets from '../../assets.json'
-import { calculateIncome, calculteExpenses } from '../../economy'
+import {
+  calculateIncome,
+  calculteExpenses,
+  type ExpensesMode,
+} from '../../economy'
+import { useTheme } from '../../useTheme'
 import { getAsset } from '../../utils'
+import { Radio, type RadioOption } from '../Radio'
 
 const workerIcon = {
   terran: assets.scv,
@@ -18,16 +30,21 @@ const workerIcon = {
   protoss: assets.probe,
 }
 
+const modes: RadioOption<ExpensesMode>[] = [
+  { value: 'number-of-queues', label: 'number of queues' },
+  { value: 'units-per-minute', label: 'units per minute (best for zerg)' },
+]
+
 export function App() {
   const [state, dispatch] = useStore()
-  const { race, workers, production } = state
+  const { race, workers, production, expensesMode } = state
 
   useTheme(race)
 
   const income = useMemo(() => calculateIncome(workers), [workers])
   const expenses = useMemo(
-    () => calculteExpenses(production, dataByRace[race].units),
-    [production, race],
+    () => calculteExpenses(production, dataByRace[race].units, expensesMode),
+    [production, race, expensesMode],
   )
 
   const warn = {
@@ -73,6 +90,11 @@ export function App() {
         warn={warn}
         value={expenses}
       />
+      <Radio
+        options={modes}
+        value={expensesMode}
+        onChange={(v) => dispatch(setExpensesMode(v))}
+      />
       <CounterGroup
         data={gameData.units}
         resources={gameData.resources}
@@ -81,19 +103,4 @@ export function App() {
       />
     </Fragment>
   )
-}
-
-// TO-DO do it in a less stupid way
-function useTheme(race: string) {
-  const themeSelector = 'link[data-theme-for]'
-
-  useEffect(() => {
-    document.head.querySelectorAll(themeSelector).forEach((el: Element) => {
-      const link = el as HTMLLinkElement
-
-      if (link.dataset.themeFor === race) {
-        link.parentElement?.appendChild(link)
-      }
-    })
-  }, [race])
 }
